@@ -1,4 +1,6 @@
-FROM eclipse-temurin:21.0.5_11-jre-alpine
+ARG java_version=latest
+
+FROM eclipse-temurin:${java_version}-jre-alpine
 
 COPY opentelemetry-javaagent.jar /otel-agent/java-otel.jar
 
