@@ -1,14 +1,9 @@
 name: Push otel-java-agent on Pull Request
 
 on:
-  pull_request:
+  push:
     branches:
       - main
-    types:
-      - closed
-    paths:
-      - otel-java-agent/Dockerfile
-      - otel-java-agent/version.yaml
 
 jobs:
   build:
@@ -30,8 +25,8 @@ jobs:
         with:
           cmd: yq '.otel-java-agent.version' 'otel-java-agent/version.yaml'
 
-      - name: Get Otel Agent script
-        run: cd ./otel-java-agent;bash download_agent.sh
+      - name: Get Otel Agent
+        run: wget https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/download/v${{ steps.lookupOtelVersion.outputs.result }}/opentelemetry-javaagent.jar -P ./otel-java-agent
 
       - name: docker login
         env:
