@@ -1,0 +1,23 @@
+services:
+  otel-service-collector:
+    #    image: otel/opentelemetry-collector-contrib:0.117.0
+    image: local/otel-service-collector:latest
+    container_name: otel-service-collector
+    hostname: docker-local
+    #    command: [ "--config=/etc/otelcol-contrib/config.yaml" ]
+    #    volumes:
+    #      - ./config.yaml:/etc/otelcol-contrib/config.yaml
+    ports:
+      - "4317:4317"
+      - "4318:4318"
+      - "8888:8888"
+      - "13133:13133"
+      - "55678:55678"
+      - "55679:55679"
+    networks:
+      - develop-bridge-network
+
+networks:
+  develop-bridge-network:
+    name: develop-bridge
+    external: true
